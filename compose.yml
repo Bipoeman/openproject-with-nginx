@@ -1,0 +1,24 @@
+version: '1.0'
+services:
+  openproject:
+    build: ./openproject
+    hostname: openproject-app
+    volumes:
+      - ./openproject/pgdata:/var/openproject/pgdata
+      - ./openproject/assets:/var/openproject/assets 
+    ports:
+      - 8080:8080
+      
+  nginx_test:
+    build: ./nginx
+    ports:
+      - 80:80
+  simple_log:
+    build: ./nodejs
+    hostname: nodeapp
+    ports:
+      - 3000:3000
+  # simple_web:
+  #   build: ./nodejs
+  #   ports:
+  #     - 3001:3000
