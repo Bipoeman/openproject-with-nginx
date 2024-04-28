@@ -1,4 +1,3 @@
-version: '1.0'
 services:
   openproject:
     build: ./openproject
@@ -8,17 +7,27 @@ services:
       - ./openproject/assets:/var/openproject/assets 
     ports:
       - 8080:8080
+    networks:
+      - default
       
   nginx_test:
     build: ./nginx
     ports:
       - 80:80
-  simple_log:
-    build: ./nodejs
-    hostname: nodeapp
-    ports:
-      - 3000:3000
-  # simple_web:
+    networks:
+      - nginx.docker
+      - default
+
+  # simple_log:
   #   build: ./nodejs
+  #   hostname: nodeapp
+  #   environment:
+  #     - PORT=3001
   #   ports:
-  #     - 3001:3000
+  #     - 3001:3001
+    
+networks:
+  nginx.docker:
+    name: nginx.docker
+    external: true
+  default:
